@@ -32,13 +32,13 @@ client = G5HubApiClient.new('http://localhost:3000')
 To access the functionality to do with notifications you'll use the `NotificationService`
 
 ```ruby
-service = client.notifications_service
+service = client.notification_service
 ```
 
 Will return a service object that has methods to access notification
 functionality like retrieving Notifications and creating new ones.
 
-### NotificationService.all(client_urn, [[page=0], pageSize=25])
+### NotificationService.all(client_urn, , params={page: 0, page_size: 25})
 
 **Example**
 ```ruby

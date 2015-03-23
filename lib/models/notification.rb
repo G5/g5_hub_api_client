@@ -1,3 +1,5 @@
+require 'json'
+
 class Notification
   attr_accessor :id,
                 :product,
@@ -20,6 +22,24 @@ class Notification
     @client_id    = hash['client_id']
     @created_at   = hash['created_at']
     @modified_at  = hash['modified_at']
+  end
+
+  def as_json(options={})
+    {
+        id: @id,
+        product: @product,
+        locations: @locations,
+        notif_type: @notif_type,
+        description: @description,
+        actions: @actions,
+        client_id: @client_id,
+        created_at: @created_at,
+        modified_at: @modified_at
+    }
+  end
+
+  def to_json
+    JSON.generate as_json
   end
 
 end
