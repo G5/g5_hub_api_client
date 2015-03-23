@@ -48,9 +48,9 @@ results = client.notification_service.all g5_client_urn, page, pageSize
 **Returns** ApiResponse structured thus:
 ```ruby
 class ApiResponse
-  attr_accessor :results,     // Array of Notifications
-                :total_rows,  // Total number of notifications for client
-                :error        // Error if one has occurred, otherwise nil
+  attr_accessor :results,     # Array of Notifications
+                :total_rows,  # Total number of notifications for client
+                :error        # Error if one has occurred, otherwise nil
   ...
 end
 ```
