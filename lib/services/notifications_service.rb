@@ -13,7 +13,7 @@ class NotificationService
 
     uri = "/clients/#{client_urn}/notifications?page=#{page}&size=#{page_size}"
     response = @http_service.get(uri)
-    get_api_response response.body['results'], response.body['total_rows'], response.code, response.message
+    get_api_response response.body['notifications'], response.body['total_rows'], response.code, response.message
   end
 
   def create(client_urn, notification)

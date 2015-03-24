@@ -23,7 +23,7 @@ RSpec.describe NotificationService do
 
       let(:response) do
         double('body' => {
-                   'results' => [{}],
+                   'notifications' => [{}],
                    'total_rows' => 25
                },
                :code => '200',
@@ -40,7 +40,7 @@ RSpec.describe NotificationService do
     context 'failure' do
       let(:response) do
         double('body' => {
-                   'results' => [],
+                   'notifications' => [],
                    'total_rows' => 0
                },
                :code => '404',
@@ -69,9 +69,7 @@ RSpec.describe NotificationService do
 
     context 'success' do
       let(:response) do
-        double('body' => {
-                   'results' => [{}],
-               },
+        double('body' => {},
                :code => '200',
                :message => 'OK')
       end
@@ -86,9 +84,7 @@ RSpec.describe NotificationService do
     context 'failure' do
 
       let(:response) do
-        double('body' => {
-                   'results' => [{}],
-               },
+        double('body' => {},
                :code => '500',
                :message => 'Server Error')
       end
