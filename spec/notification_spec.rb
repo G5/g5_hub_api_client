@@ -1,8 +1,8 @@
 require_relative '../lib/models/notification'
 
-RSpec.describe Notification do
+RSpec.describe G5HubApi::Notification do
   describe 'to_json' do
-    let(:notification) { Notification.new('product'=> 'blah',
+    let(:notification) { G5HubApi::Notification.new('product'=> 'blah',
                                'locations'=> [],
                                'notif_type' => 'Some notification',
                                'description' => 'Bla blab albnskdj wlkjdkjd',

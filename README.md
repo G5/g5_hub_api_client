@@ -15,7 +15,7 @@ And then execute:
 
     $ bundle
 
-## G5HubApiClient
+## G5HubApi::Client
 
 ```ruby
 require 'g5_hub_api_client'
@@ -24,7 +24,7 @@ require 'g5_hub_api_client'
 ### .new(host)
 
 ```ruby
-client = G5HubApiClient.new('http://localhost:3000')
+client = G5HubApi::Client.new('http://localhost:3000')
 ```
 
 ## Notifications
