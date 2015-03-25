@@ -4,7 +4,7 @@ require 'rspec/its'
 require 'rspec/mocks'
 require 'rspec/expectations'
 
-RSpec.describe NotificationService do
+RSpec.describe G5HubApi::NotificationService do
 
 
   # let(:httpService) { HttpService.new('http://localhost:3000') }
@@ -17,7 +17,7 @@ RSpec.describe NotificationService do
 
   describe '#all' do
 
-    subject { NotificationService.new(httpService).all 'g5-c-6jxap99-blark', page: 0, page_size:1 }
+    subject { G5HubApi::NotificationService.new(httpService).all 'g5-c-6jxap99-blark', page: 0, page_size:1 }
 
     context 'success' do
 
@@ -31,8 +31,8 @@ RSpec.describe NotificationService do
       end
 
       its('results.length') { is_expected.to eq(1) }
-      it { expect(subject).to be_an_instance_of ApiResponse}
-      it { expect(subject.results[0]).to be_an_instance_of Notification  }
+      it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse}
+      it { expect(subject.results[0]).to be_an_instance_of G5HubApi::Notification  }
       it { expect(subject.error).to eq(nil) }
 
     end
@@ -48,7 +48,7 @@ RSpec.describe NotificationService do
       end
 
       its('results.length') { is_expected.to eq(0) }
-      it { expect(subject).to be_an_instance_of ApiResponse }
+      it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse }
       it { expect(subject.error).not_to eq(nil) }
     end
 
@@ -57,7 +57,7 @@ RSpec.describe NotificationService do
   describe '#create' do
 
     let(:notification) do
-      Notification.new('product'=> 'blah',
+      G5HubApi::Notification.new('product'=> 'blah',
                        'locations'=> [],
                        'notif_type' => 'Some notification',
                        'description' => 'Bla blab albnskdj wlkjdkjd',
@@ -65,7 +65,7 @@ RSpec.describe NotificationService do
                        'client_id' => '1234')
     end
 
-    subject { NotificationService.new(httpService).create 'g5-c-6jxap99-blark', notification }
+    subject { G5HubApi::NotificationService.new(httpService).create 'g5-c-6jxap99-blark', notification }
 
     context 'success' do
       let(:response) do
@@ -75,9 +75,9 @@ RSpec.describe NotificationService do
       end
 
       its('results.length') { is_expected.to eq(1) }
-      it { expect(subject).to be_an_instance_of ApiResponse }
+      it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse }
       it { expect(subject.error).to eq(nil) }
-      it { expect(subject.results[0]).to be_an_instance_of Notification }
+      it { expect(subject.results[0]).to be_an_instance_of G5HubApi::Notification }
 
     end
 
@@ -90,7 +90,7 @@ RSpec.describe NotificationService do
       end
 
       its('results.length') { is_expected.to eq(0) }
-      it { expect(subject).to be_an_instance_of ApiResponse }
+      it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse }
       it { expect(subject.error).to_not eq(nil) }
 
     end
