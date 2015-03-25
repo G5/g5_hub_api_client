@@ -15,7 +15,7 @@ And then execute:
 
     $ bundle
 
-## G5HubApiClient
+## G5HubApi::Client
 
 ```ruby
 require 'g5_hub_api_client'
