@@ -19,14 +19,14 @@ module G5HubApi
 
     # @param endpoint     - e.g. '/context'
     # @param query_params - e.g. {a:1,b:2}
-    def get(endpoint='/', query_params=nil)
+    def get(endpoint = '/', query_params = nil)
       make_request :get, endpoint, query_params
     end
 
     # @param endpoint     - e.g. '/context
     # @param query_params - e.g. {a:1,b:2}
     # @param body         - Any object that will respond to to_json
-    def post(endpoint='/', query_params=nil, body={})
+    def post(endpoint = '/', query_params = nil, body = {})
       make_request :post, endpoint, query_params, body
     end
 
@@ -34,7 +34,7 @@ module G5HubApi
     # @param endpoint     - e.g. '/context
     # @param query_params - e.g. {a:1,b:2}
     # @param body         - Any object that will respond to to_json
-    def make_request(type=:get, endpoint='/', query_params=nil, body=nil)
+    def make_request(type = :get, endpoint = '/', query_params = nil, body = nil)
       url = "#{@host}#{endpoint}"
       uri = URI.parse url
 
@@ -53,7 +53,7 @@ module G5HubApi
                   Net::HTTP::Post.new(uri.request_uri)
                 end
 
-      if(type == :post)
+      if type == :post
         request.body = body.to_json if type == :post && body
         request[CONTENT_TYPE] = APPLICATION_JSON
       end
@@ -73,8 +73,7 @@ module G5HubApi
     end
 
     def query_string(query_hash)
-      URI::encode(query_hash.map{|k,v| "#{k}=#{v}"}.join('&'))
+      URI::encode(query_hash.map { |k, v| "#{k}=#{v}" }.join('&'))
     end
-
   end
 end

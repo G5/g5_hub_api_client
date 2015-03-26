@@ -1,13 +1,11 @@
 module G5HubApi
   class ApiResponse
-    attr_accessor :results,
-                  :total_rows,
-                  :error
+    attr_accessor :results, :total_rows, :error
 
-    def initialize(results=[], total_rows=0, error=nil)
-      @results = results
+    def initialize(results = [], total_rows = 0, error = nil)
+      @results    = results
       @total_rows = total_rows
-      @error = error
+      @error      = error
     end
   end
 end
