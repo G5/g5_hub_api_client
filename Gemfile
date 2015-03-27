@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gemspec
+# gemspec # This causes my `bundle install` to fail
 ruby '2.1.2'
 
 group :test do

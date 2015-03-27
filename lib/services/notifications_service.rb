@@ -8,18 +8,26 @@ module G5HubApi
       @http_service = http_service
     end
 
-    def all(client_urn, params={page: 0, page_size: 25})
-      page      = params[:page]       || 0
-      page_size = params[:page_size]  || 25
+    def all(client_urn, params={page: 0, page_size: 25, auth_token: nil})
+      page       = params[:page]       || 0
+      page_size  = params[:page_size]  || 25
+      auth_token = params[:auth_token] || nil
 
-      uri = "/clients/#{client_urn}/notifications?page=#{page}&size=#{page_size}"
-      response = @http_service.get(uri)
-      get_api_response response.body['notifications'], response.body['total_rows'], response.code, response.message
+
+      uri = "/clients/#{client_urn}/notifications"
+      response = @http_service.get(endpoint: uri,
+                                   query_params: {page: page, size: page_size},
+                                   headers: {'Authorization'=>"Bearer #{auth_token}"})
+
+      get_api_response(response.body['notifications'], response.body['total_rows'], response.code, response.message)
     end
 
-    def create(client_urn, notification)
+    def create(client_urn, notification, params={auth_token: nil})
+      auth_token = params[:auth_token] || nil
       uri = "/clients/#{client_urn}/notifications"
-      response = @http_service.post(uri, nil, notification)
+      response = @http_service.post(endpoint: uri,
+                                    body: notification,
+                                    headers: {'Authorization'=>"Bearer #{auth_token}"})
       get_api_response [response.body], nil, response.code, response.message
     end
 
