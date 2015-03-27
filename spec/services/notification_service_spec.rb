@@ -1,12 +1,6 @@
-require_relative '../lib/services/notifications_service'
-require_relative '../lib/services/http_service'
-require 'rspec/its'
-require 'rspec/mocks'
-require 'rspec/expectations'
+require 'spec_helper'
 
-RSpec.describe G5HubApi::NotificationService do
-
-
+describe G5HubApi::NotificationService do
   # let(:httpService) { HttpService.new('http://localhost:3000') }
 
   let(:httpService) do

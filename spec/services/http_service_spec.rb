@@ -1,7 +1,6 @@
-require_relative '../lib/services/http_service'
-require 'rspec/its'
+require 'spec_helper'
 
-RSpec.describe G5HubApi::HttpService do
+describe G5HubApi::HttpService do
 
   shared_examples '#make_request' do |request_type|
 
