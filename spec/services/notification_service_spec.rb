@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe G5HubApi::NotificationService do
-  # let(:httpService) { HttpService.new('http://localhost:3000') }
+
+  # let(:httpService) { G5HubApi::HttpService.new('http://localhost:3000') }
 
   let(:httpService) do
     double('HttpService',
@@ -11,7 +12,11 @@ describe G5HubApi::NotificationService do
 
   describe '#all' do
 
-    subject { G5HubApi::NotificationService.new(httpService).all 'g5-c-6jxap99-blark', page: 0, page_size:1 }
+    subject do
+      G5HubApi::NotificationService.new(httpService)
+          .all('g5-c-6jxap99-blark', page: 0, page_size: 1,
+               auth_token: '6928b6d784e11f665b2f7b520f91734d735b99130b4f4014ab20ef561be34d21')
+    end
 
     context 'success' do
 
@@ -25,7 +30,9 @@ describe G5HubApi::NotificationService do
       end
 
       its('results.length') { is_expected.to eq(1) }
-      it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse}
+      it 'returns an ApiResponse', focus: false do
+        expect(subject).to be_an_instance_of G5HubApi::ApiResponse
+      end
       it { expect(subject.results[0]).to be_an_instance_of G5HubApi::Notification  }
       it { expect(subject.error).to eq(nil) }
 
@@ -52,11 +59,11 @@ describe G5HubApi::NotificationService do
 
     let(:notification) do
       G5HubApi::Notification.new('product'=> 'blah',
-                       'locations'=> [],
-                       'notif_type' => 'Some notification',
-                       'description' => 'Bla blab albnskdj wlkjdkjd',
-                       'actions' => [],
-                       'client_id' => '1234')
+                                 'locations'=> [],
+                                 'notif_type' => 'Some notification',
+                                 'description' => 'Bla blab albnskdj wlkjdkjd',
+                                 'actions' => [],
+                                 'client_id' => '1234')
     end
 
     subject { G5HubApi::NotificationService.new(httpService).create 'g5-c-6jxap99-blark', notification }
