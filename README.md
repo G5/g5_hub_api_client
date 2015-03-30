@@ -15,6 +15,30 @@ And then execute:
 
     $ bundle
 
+## Running Unit Tests
+
+    rspec spec
+
+## Running End-To-End Tests
+
+Make sure that you have a client hub up and running. Open notifications_e2e_spec.rb and set the
+
+`CLIENT_URN` e.g. g5-c-6jxap99-blark,
+`HUB_HOST` e.g. 'http://localhost:3000'
+`AUTH_TOKEN` e.g. 0419547595d6e36c7d9b7424ba4865ddba4bb662fbdd70e0815daaae311788b2
+
+Getting an `AUTH_TOKEN` is a little difficult. You can do it manually by adding
+
+```ruby
+logger.debug(current_user.g5_access_token)
+```
+
+to any G5 Auth enabled webapp and then watching the logs.
+
+Next run
+
+    rspec spec_end2end
+
 ## G5HubApi::Client
 
 ```ruby
@@ -75,10 +99,22 @@ class Notification
                 :locations,     # Array of Strings
                 :notif_type,    # String
                 :description,   # String
-                :actions,       # Hash of actions
+                :actions,       # Array of Actions
                 :client_id,     # id of client in hub DB... not client_urn
                 :created_at,    # Date
                 :modified_at    # Date
   ...
+end
+```
+
+### `Action` Model
+
+The `Action model is structured thus
+
+```ruby
+class Action
+    attr_accessor :label,   # String
+                  :url      # URL
+...
 end
 ```

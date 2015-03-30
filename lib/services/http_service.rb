@@ -19,6 +19,7 @@ module G5HubApi
 
     # @param endpoint     - e.g. '/context'
     # @param query_params - e.g. {a:1,b:2}
+    # @param headers      - name value pairs for custom headers
     DEFAULT_GET_PARAMS = { endpoint: '/', query_params: nil, body: nil, headers: {} }
     def get(params = DEFAULT_GET_PARAMS)
       params[:type] = :get
@@ -28,6 +29,7 @@ module G5HubApi
     # @param endpoint     - e.g. '/context
     # @param query_params - e.g. {a:1,b:2}
     # @param body         - Any object that will respond to to_json
+    # @param headers      - name value pairs for custom headers
     DEFAULT_POST_PARAMS = { endpoint:'/', query_params:nil, body:{}, headers:{} }
     def post(params = DEFAULT_POST_PARAMS)
       params[:type] = :post
@@ -38,6 +40,7 @@ module G5HubApi
     # @param endpoint     - e.g. '/context
     # @param query_params - e.g. {a:1,b:2}
     # @param body         - Any object that will respond to to_json
+    # @param headers      - name value pairs for custom headers
     DEFAULT_PARAMS = { type: :get, endpoint: '/', query_params: nil, body: nil, headers: {} }
     def make_request(params = DEFAULT_PARAMS)
       type          = get_param(params, :type)

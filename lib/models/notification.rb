@@ -19,6 +19,9 @@ module G5HubApi
       @notif_type   = hash['notif_type']
       @description  = hash['description']
       @actions      = hash['actions']
+      if(@actions && @actions.kind_of?(Array))
+        @actions = @actions.map { |value| G5HubApi::Action.new(value) }
+      end
       @client_id    = hash['client_id']
       @created_at   = hash['created_at']
       @modified_at  = hash['modified_at']

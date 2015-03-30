@@ -1,4 +1,5 @@
 require 'models/notification'
+require 'models/action'
 require 'models/api_response'
 
 module G5HubApi
