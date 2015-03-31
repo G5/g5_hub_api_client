@@ -37,12 +37,13 @@ describe G5HubApi::HttpService do
       it { expect{ subject }.to_not raise_error (Exception) }
     end
 
+
     context 'Query string as part of endpoint' do
       let(:service) { G5HubApi::HttpService.new('http://validate.jsontest.com') }
       subject { service.make_request(type: request_type, endpoint: '/hello?json={}') }
 
       it { expect{ subject }.to raise_error(URI::InvalidURIError) }
-    end
+    end if RUBY_VERSION <= "2.1.2"
 
     context 'Using query params' do
       let(:service) { G5HubApi::HttpService.new('http://validate.jsontest.com') }
