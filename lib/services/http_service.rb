@@ -93,7 +93,7 @@ module G5HubApi
     end
 
     def query_string(query_hash)
-      URI::encode(query_hash.map { |k, v| "#{k}=#{v}" }.join('&'))
+      URI::encode_www_form(query_hash)
     end
 
     def get_param(params, param)

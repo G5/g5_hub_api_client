@@ -19,7 +19,7 @@ module G5HubApi
       @notif_type   = hash['notif_type']
       @description  = hash['description']
       @actions      = hash['actions']
-      if(@actions && @actions.kind_of?(Array))
+      if (@actions && @actions.is_a?(Array))
         @actions = @actions.map { |value| G5HubApi::Action.new(value) }
       end
       @client_id    = hash['client_id']
