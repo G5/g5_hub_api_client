@@ -6,7 +6,7 @@ describe G5HubApi::HttpService do
 
     context 'Valid host and endpoint' do
       let(:service) { G5HubApi::HttpService.new('http://echo.jsontest.com') }
-      subject { service.make_request(request_type, '/a/1') }
+      subject { service.make_request(type: request_type, endpoint: '/a/1') }
 
       its(:body) { is_expected.to eq({'a'=>'1'}) }
       its(:code) { is_expected.to eq('200') }
@@ -16,13 +16,13 @@ describe G5HubApi::HttpService do
     context 'Invalid host' do
       let(:service) { G5HubApi::HttpService.new('http://boblablaslawblog.com') }
       it do
-        expect{ service.make_request(request_type, '/') }.to raise_error(SocketError)
+        expect{ service.make_request(type: request_type, endpoint:'/') }.to raise_error(SocketError)
       end
     end
 
     context 'Invalid path' do
       let(:service) { G5HubApi::HttpService.new('http://www.google.com') }
-      subject { service.make_request(request_type, '/blarg') }
+      subject { service.make_request(type: request_type, endpoint: '/blarg') }
 
       its(:code) { is_expected.to eq('404') }
       it { expect{ subject }.to_not raise_error (Exception) }
@@ -30,32 +30,44 @@ describe G5HubApi::HttpService do
 
     context 'Wrong content type' do
       let(:service) { G5HubApi::HttpService.new('http://www.google.com') }
-      subject { service.make_request(request_type, '/search') }
+      subject { service.make_request(type: request_type, endpoint: '/search') }
 
       its(['Content-Type']) { is_expected.to include('text/html') }
       its(:body) { is_expected.to be_a(String)}
       it { expect{ subject }.to_not raise_error (Exception) }
     end
 
+
     context 'Query string as part of endpoint' do
       let(:service) { G5HubApi::HttpService.new('http://validate.jsontest.com') }
-      subject { service.make_request(request_type, '/hello?json={}') }
+      subject { service.make_request(type: request_type, endpoint: '/hello?json={}') }
 
       it { expect{ subject }.to raise_error(URI::InvalidURIError) }
-    end
+    end if RUBY_VERSION <= "2.1.2"
 
     context 'Using query params' do
       let(:service) { G5HubApi::HttpService.new('http://validate.jsontest.com') }
-      subject { service.make_request(request_type, '/', {json:'{}'}) }
+      subject { service.make_request(type: request_type, endpoint: '/', query_params: {json:'{}'}) }
 
       it { expect( subject.body['empty'] ).to eq(true) }
       its(:code) { is_expected.to eq('200') }
       its(['Content-Type']) { is_expected.to include('application/json') }
     end
 
+    context 'with headers' do
+      let(:token) { 'Bearer sometoken' }
+      let(:service) { G5HubApi::HttpService.new('http://headers.jsontest.com') }
+      subject { service.make_request(type: request_type, endpoint: '/', headers: {'Authorization' => token} ) }
+
+      its(:code) { is_expected.to eq('200') }
+      it 'body should contain header' do
+        expect( subject.body['Authorization'] ).to eq( token )
+      end
+    end
+
     context 'Using Https' do
       let(:service) { G5HubApi::HttpService.new('https://www.google.com') }
-      subject { service.make_request(request_type, '/search') }
+      subject { service.make_request(type: request_type, endpoint: '/search') }
       it { expect{ subject }.to_not raise_error (Exception) }
     end
 

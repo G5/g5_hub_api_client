@@ -6,10 +6,14 @@ require 'openssl'
 module G5HubApi
   class HttpService
 
-    HTTPS             = 'https'
-    CONTENT_TYPE      = 'Content-Type'
-    APPLICATION_JSON  = 'application/json'
-    ACCEPTS           = 'Accepts'
+    HTTPS               = 'https'
+    CONTENT_TYPE        = 'Content-Type'
+    APPLICATION_JSON    = 'application/json'
+    ACCEPTS             = 'Accepts'
+
+    DEFAULT_PARAMS      = { type: :get, endpoint: '/', query_params: nil, body: nil, headers: {} }.freeze
+    DEFAULT_GET_PARAMS  = DEFAULT_PARAMS
+    DEFAULT_POST_PARAMS = { endpoint:'/', query_params:nil, body:{}, headers:{} }
 
     # @param host - e.g. 'http(s)://www.google.com:8080'
     def initialize(host)
@@ -17,24 +21,38 @@ module G5HubApi
       return self
     end
 
-    # @param endpoint     - e.g. '/context'
-    # @param query_params - e.g. {a:1,b:2}
-    def get(endpoint = '/', query_params = nil)
-      make_request :get, endpoint, query_params
+    # @param params
+    #   :endpoint     - e.g. '/context
+    #   :query_params - e.g. {a:1,b:2}
+    #   :headers      - name value pairs for custom headers
+    def get(params = DEFAULT_GET_PARAMS)
+      params[:type] = :get
+      make_request params
     end
 
-    # @param endpoint     - e.g. '/context
-    # @param query_params - e.g. {a:1,b:2}
-    # @param body         - Any object that will respond to to_json
-    def post(endpoint = '/', query_params = nil, body = {})
-      make_request :post, endpoint, query_params, body
+    # @param params
+    #   :endpoint     - e.g. '/context
+    #   :query_params - e.g. {a:1,b:2}
+    #   :body         - Any object that will respond to to_json
+    #   :headers      - name value pairs for custom headers
+    def post(params = DEFAULT_POST_PARAMS)
+      params[:type] = :post
+      make_request params
     end
 
-    # @param type         - :get | :post
-    # @param endpoint     - e.g. '/context
-    # @param query_params - e.g. {a:1,b:2}
-    # @param body         - Any object that will respond to to_json
-    def make_request(type = :get, endpoint = '/', query_params = nil, body = nil)
+    # @param params
+    #   :type         - :get | :post
+    #   :endpoint     - e.g. '/context
+    #   :query_params - e.g. {a:1,b:2}
+    #   :body         - Any object that will respond to to_json
+    #   :headers      - name value pairs for custom headers
+    def make_request(params = DEFAULT_PARAMS)
+      type          = get_param(params, :type)
+      endpoint      = get_param(params, :endpoint)
+      query_params  = get_param(params, :query_params)
+      body          = get_param(params, :body)
+      headers       = get_param(params, :headers)
+
       url = "#{@host}#{endpoint}"
       uri = URI.parse url
 
@@ -58,6 +76,8 @@ module G5HubApi
         request[CONTENT_TYPE] = APPLICATION_JSON
       end
 
+      headers.each { |key,value| request[key] = value } if headers
+
       request[ACCEPTS] = APPLICATION_JSON
 
       response = http.request(request)
@@ -73,7 +93,11 @@ module G5HubApi
     end
 
     def query_string(query_hash)
-      URI::encode(query_hash.map { |k, v| "#{k}=#{v}" }.join('&'))
+      URI::encode_www_form(query_hash)
+    end
+
+    def get_param(params, param)
+      params[param] || DEFAULT_PARAMS[param]
     end
   end
 end
