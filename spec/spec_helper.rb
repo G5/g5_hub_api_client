@@ -20,6 +20,7 @@
 require 'rspec/its'
 require 'rspec/mocks'
 require 'rspec/expectations'
+require 'webmock/rspec'
 
 require 'g5_hub_api_client'
 
