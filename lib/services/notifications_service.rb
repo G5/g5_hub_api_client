@@ -44,6 +44,21 @@ module G5HubApi
       return get_api_response([body], nil, response.code)
     end
 
+    def update(user_id, notification, params={auth_token: nil})
+      auth_token = params[:auth_token] || nil
+      response = RestClient.put(
+        "#{@host}/users/#{user_id}/notifications/#{notification.id}",
+        notification,
+        params: { access_token: auth_token },
+        verify_ssl: OpenSSL::SSL::VERIFY_NONE
+      )
+    rescue => e
+      response = e.response
+    ensure
+      body = JSON.parse(response.body)
+      return get_api_response([body], nil, response.code)
+    end
+
     private
 
     def get_api_response(results, total_rows, code)

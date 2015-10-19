@@ -84,4 +84,46 @@ describe G5HubApi::NotificationService do
 
   end
 
+  describe '#udpate' do
+    let(:notification) do
+      G5HubApi::Notification.new(
+        'id' => 'blah',
+        'product'=> 'blah',
+        'locations'=> [],
+        'notif_type' => 'Some notification',
+        'description' => 'Bla blab albnskdj wlkjdkjd',
+        'actions' => [],
+        'client_id' => client_id)
+    end
+
+    before do
+      stub_request(:put, "#{host}/users/#{user_id}/notifications/#{notification.id}?access_token=#{auth_token}")
+        .to_return(body: response_body.to_json, status: response_code)
+    end
+
+    subject { G5HubApi::NotificationService.new(host).update(user_id, notification, auth_token: auth_token) }
+
+    context 'success' do
+      let(:response_body) { {} }
+      let(:response_code) { 200 }
+
+      its('results.length') { is_expected.to eq(1) }
+      it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse }
+      it { expect(subject.error).to eq(nil) }
+      it { expect(subject.results[0]).to be_an_instance_of G5HubApi::Notification }
+
+    end
+
+    context 'failure' do
+
+      let(:response_body) { {} }
+      let(:response_code) { 500 }
+
+      its('results.length') { is_expected.to eq(0) }
+      it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse }
+      it { expect(subject.error).to_not eq(nil) }
+
+    end
+  end
+
 end
