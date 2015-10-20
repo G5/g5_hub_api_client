@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'g5_authentication_client'
+  spec.add_development_dependency 'http_logger'
 
   spec.add_runtime_dependency 'rest-client'
 end

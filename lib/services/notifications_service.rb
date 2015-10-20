@@ -31,8 +31,10 @@ module G5HubApi
       auth_token = params[:auth_token] || nil
       response = RestClient.post(
         "#{@host}/clients/#{client_urn}/notifications",
-        notification,
+        {notification: notification.as_json}.to_json,
         params: { access_token: auth_token },
+        content_type: :json,
+        accept: :json,
         verify_ssl: OpenSSL::SSL::VERIFY_NONE
       )
     rescue => e

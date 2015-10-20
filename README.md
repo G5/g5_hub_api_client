@@ -83,7 +83,7 @@ end
 
 **Example**
 ```ruby
-result = client.notification_service.create g5_client_urn, notification
+result = client.notification_service.create(g5_client_urn, notification, auth_token: 'someauthtoken')
 ```
 
 **Returns** `Notification`
@@ -103,6 +103,7 @@ class Notification
                 :client_id,     # id of client in hub DB... not client_urn
                 :created_at,    # Date
                 :modified_at    # Date
+                :read_at        # Date
   ...
 end
 ```
