@@ -3,8 +3,8 @@ require 'spec_helper'
 describe G5HubApi::Client, e2e: true do
 
   AUTH_TOKEN = '0419547595d6e36c7d9b7424ba4865ddba4bb662fbdd70e0815daaae311788b2'
-  HUB_HOST = 'http://localhost:3000'
-  CLIENT_URN = 'g5-c-6jxap99-blark'
+  HUB_HOST = 'https://h5-hub-analytics.herokuapp.com'
+  CLIENT_URN = 'g5-c-1slhp2tc-compass-rock-real-estate'
 
   let(:api_client) { G5HubApi::Client.new(HUB_HOST) }
   let(:service) { api_client.notification_service }

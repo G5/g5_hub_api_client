@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe G5HubApi::NotificationService do
 
-  # let(:httpService) { G5HubApi::HttpService.new('http://localhost:3000') }
-
   let(:host) { 'http://localhost:3000' }
   let(:user_id) { 'some_user_id' }
   let(:auth_token) { '6928b6d784e11f665b2f7b520f91734d735b99130b4f4014ab20ef561be34d21' }
@@ -17,12 +15,6 @@ describe G5HubApi::NotificationService do
     stub_request(:post, "#{host}/clients/#{client_id}/notifications?access_token=#{auth_token}")
       .to_return(body: response_body.to_json, status: response_code)
   end
-
-  # let(:httpService) do
-  #   double('HttpService',
-  #          :get => response,
-  #          :post => response)
-  # end
 
   describe '#all_for_user' do
 

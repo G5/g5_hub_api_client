@@ -62,11 +62,11 @@ service = client.notification_service
 Will return a service object that has methods to access notification
 functionality like retrieving Notifications and creating new ones.
 
-### NotificationService.all(client_urn, params={page: 0, page_size: 25, auth_token: nil})
+### NotificationService.all_for_user(user_id, params={page: 0, page_size: 25, auth_token: nil})
 
 **Example**
 ```ruby
-results = client.notification_service.all(g5_client_urn, page: 0, page_size: 12, auth_token: '1234sdf...')
+results = client.notification_service.all_for_user(user_id, page: 0, page_size: 12, auth_token: '1234sdf...')
 ```
 
 **Returns** ApiResponse structured thus:
