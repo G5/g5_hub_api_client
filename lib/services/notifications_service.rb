@@ -48,7 +48,7 @@ module G5HubApi
       auth_token = params[:auth_token] || nil
       response = RestClient.put(
         "#{@host}/users/#{user_id}/notifications/#{notification.id}",
-        notification,
+        {notification: notification.as_json}.to_json,
         params: { access_token: auth_token },
         verify_ssl: OpenSSL::SSL::VERIFY_NONE
       )
