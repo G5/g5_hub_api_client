@@ -1,7 +1,7 @@
 # coding: utf-8
 Gem::Specification.new do |spec|
   spec.name          = 'g5_hub_api_client'
-  spec.version       = '0.0.0'
+  spec.version       = '1.1.0'
   spec.authors       = ['Jonathan Samples']
   spec.email         = ['jonathan.samples@g5searchmarketing.com']
   spec.summary       = %q{G5 Hub API Client}
@@ -20,4 +20,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'g5_authentication_client'
+  spec.add_development_dependency 'http_logger'
+
+  spec.add_runtime_dependency 'rest-client'
 end

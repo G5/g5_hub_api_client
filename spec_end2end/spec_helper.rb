@@ -20,9 +20,9 @@
 require 'rspec/its'
 require 'rspec/mocks'
 require 'rspec/expectations'
-require 'webmock/rspec'
-
+require 'http_logger'
 require 'g5_hub_api_client'
+
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
