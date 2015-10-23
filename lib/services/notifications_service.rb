@@ -10,14 +10,15 @@ module G5HubApi
       @host = host
     end
 
-    def all_for_user(user_id, params = { page: 0, page_size: 25, auth_token: nil })
+    def all_for_user(user_id, params = { page: 0, page_size: 25, auth_token: nil, read_only: nil })
       page       = params[:page]       || 0
       page_size  = params[:page_size]  || 25
       auth_token = params[:auth_token] || nil
+      read_only  = params[:read_only]  || nil
 
       response = RestClient.get(
         "#{@host}/users/#{user_id}/notifications",
-        params: { access_token: auth_token, page: page, size: page_size },
+        params: { access_token: auth_token, page: page, size: page_size, read_only: read_only },
         verify_ssl: OpenSSL::SSL::VERIFY_NONE
       )
     rescue => e
