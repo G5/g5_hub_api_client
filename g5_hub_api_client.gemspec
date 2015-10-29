@@ -1,7 +1,7 @@
 # coding: utf-8
 Gem::Specification.new do |spec|
   spec.name          = 'g5_hub_api_client'
-  spec.version       = '1.1.0'
+  spec.version       = '1.1.1'
   spec.authors       = ['Jonathan Samples']
   spec.email         = ['jonathan.samples@g5searchmarketing.com']
   spec.summary       = %q{G5 Hub API Client}

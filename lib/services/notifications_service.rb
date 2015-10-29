@@ -6,6 +6,8 @@ require 'rest-client'
 module G5HubApi
   class NotificationService
 
+    EMPTY_JSON = {}.to_json.freeze
+
     def initialize(host)
       @host = host
     end
@@ -41,7 +43,7 @@ module G5HubApi
     rescue => e
       response = e.response
     ensure
-      body = JSON.parse(response.body)
+      body = response.body.empty? ? EMPTY_JSON : JSON.parse(response.body)
       return get_api_response([body], nil, response.code)
     end
 

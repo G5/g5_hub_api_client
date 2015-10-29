@@ -73,6 +73,15 @@ describe G5HubApi::NotificationService do
       it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse }
       it { expect(subject.error).to_not eq(nil) }
     end
+
+    context '204(empty) response' do
+      let(:response_body) { {} }
+      let(:response_code) { 204 }
+
+      its('results.length') { is_expected.to eq(0) }
+      it { expect(subject).to be_an_instance_of G5HubApi::ApiResponse }
+      it { expect(subject.error).to_not eq(nil) }
+    end
   end
 
   describe '#udpate' do
